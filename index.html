@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <!-- TODO: Change subject rows not in use (adding or minusing), adjust calcualtions for attainment at bottom-> test, publish-->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>GPA Calculator</title>
+    <script>
+        var total_subjects = 8
+
+        function add_row() {
+            total_subjects++;
+            var table = document.getElementById("grade_table_body");
+            var row = table.insertRow(total_subjects-1);
+
+            var cell1 = row.insertCell(0);
+
+            //subject grades
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+
+            //id's for each cell to be calcuated
+            var id_1 = "g" + total_subjects.toString() + "_1";
+            var id_2 = "g" + total_subjects.toString() + "_2";
+            var id_3 = "g" + total_subjects.toString() + "_3";
+
+            //setting id's
+            cell2.id = id_1;
+            cell3.id = id_2;
+            cell4.id = id_3;
+
+            cell1.innerHTML = total_subjects.toString();
+            cell1.style.color = "white";
+
+            var selectHTML = '<td><select><option value="7">7</option><option value="6">6</option><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option><option value="0">-</option></select></td>';
+
+            cell2.innerHTML = selectHTML;
+            cell3.innerHTML = selectHTML;
+            cell4.innerHTML = selectHTML;
+        }
+
+        function selectElement(id, value_num) {
+            let element = document.getElementById(id);
+            element.id = value_num;
+        }
+
+        function less_row() {
+            var table = document.getElementById("grade_table_body");
+            if (total_subjects > 8)
+            {
+                var row = table.deleteRow(total_subjects-1);
+                total_subjects--;
+            }
+        }
+
+        function add_grades() {
+            //redundant
+            //let sNum = parseInt(document.querySelector("#s_num").value);
+            //console.log("Number of subjects: " + sNum);
+
+            let sub_grades = 0; //number of grades within a subjects (not always 3)
+            let total_grades = 0;
+            let number_of_fives = 0;
+
+            //loop for adding all selects together - add 1 to account for the id names starting with 1
+            for (let i = 1; i < total_subjects+1; i++) {
+                for (let s = 1; s < 3+1; s++) {
+                    let g_string = "#g" + i.toString() + "_" + s.toString();
+                    let g = document.querySelector(g_string).value;
+                    total_grades += parseFloat(g);
+                    if (g != 0) {
+                        sub_grades++;
+                    }
+                    //alert(g_string + ": " + g);
+                    if (i === 7) {
+                        alert(g_string + ": " + g);
+                    }
+                }
+            }
+            console.log("Number of all grades(with PE): " + sub_grades+2);
+            //Includes PE
+            let pe_SA = document.querySelector("#pe_g1").value;
+            let pe_AL = document.querySelector("#pe_g2").value;
+            total_grades += parseFloat(pe_SA) + parseFloat(pe_AL);
+            console.log("All grades Added: " + total_grades);
+            average(total_grades, sub_grades + 2); //total number of grade plus PE's (only two grades for the subject)
+        }
+
+        function average(total_grades, total_s) {
+            const ave = total_grades/total_s;
+            var rounded = ave.toFixed(3)
+            console.log("Full average: " + ave);
+            document.getElementById("GPA").innerHTML = "<b>Your Grade Average: </b>" + rounded.toString();
+            check(ave)
+        }
+
+        function check(average_grades) {
+            let a_text = document.querySelector("#Achievement");
+
+            if (average_grades > 6.6) {
+                a_text.innerHTML = "Amazing! You achieved Principles list!";
+            }
+            else if (average_grades < 6.6 && average_grades > 6.4) {
+                a_text.innerHTML = "Great Job! You achieved Distinction!";
+            }
+            else if (average_grades < 6.4 && average_grades > 6.2) {
+                a_text.innerHTML = "Cool! You achieved Commendation for effort and achievemnt!";
+            }
+            else if (average_grades < 6.33 && average_grades > 6.22) {
+                a_text.innerHTML = "Cool! You achieved Commendation for effort!";
+            }
+            else if (average_grades === 0) {
+                a_text.innerHTML = "uhh, are you sure you are in the right school?";
+            }
+            else {
+                a_text.innerHTML = "Aww, maybe next term!";
+            }
+        }
+    </script>
+</head>
+<body style="background-color: black; color: white;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 200"><path fill="#0099ff" fill-opacity="1" d="M0,32L60,37.3C120,43,240,53,360,85.3C480,117,600,171,720,165.3C840,160,960,96,1080,90.7C1200,85,1320,139,1380,165.3L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
+    <div class="container-sm">
+        <h1 style="color: dodgerblue">
+            ACS International GPA Calculator
+        </h1>
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">Calculate Your Grade Point Average!</h4>
+          <p>This website simply calculates your GPA to determine whether you have achieved principals list, distinction or commendation for effort and achievement(estimation)!</p>
+          <hr>
+          <p class="mb-0">Made with love by Emmanuel Carter (2021 Headboy)</p>
+        </div>
+        <!--div>
+            <label for="s_num"><b>Number of Subjects (Excluding PE)?</b></label>
+            <select name="subject number" id="s_num">
+                <option value="8">8</option>
+                <option value="7">7</option>
+                <option value="6">6</option>
+                <option value="7">5</option>
+            </select>
+        </div!-->
+        <br>
+
+        <button type="button" class="btn btn-success" onclick="add_row()">Add</button>
+        <button type="button" class="btn btn-danger" onclick="less_row()">Less</button>
+
+        <br>
+        <table class="table" id="grade_table">
+          <thead class="table-dark">
+            <tr>
+                <th>Subjects</th>
+                <th>Subject Attainment</th>
+                <th>Attitude to Learning</th>
+                <th>Completion of Work</th>
+            </tr>
+          </thead>
+          <tbody id="grade_table_body">
+            <tr>
+                <td style="color: white">
+                    1
+                </td>
+                <td>
+                    <select name="grades1" id="g1_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g1_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g1_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    2
+                </td>
+                <td>
+                    <select name="grades1" id="g2_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g2_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g2_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    3
+                </td>
+                <td>
+                    <select name="grades1" id="g3_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g3_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g3_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    4
+                </td>
+                <td>
+                    <select name="grades1" id="g4_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g4_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g4_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    5
+                </td>
+                <td>
+                    <select name="grades1" id="g5_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g5_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g5_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    6
+                </td>
+                <td>
+                    <select name="grades1" id="g6_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g6_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g6_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    7
+                </td>
+                <td>
+                    <select name="grades1" id="g7_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g7_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g7_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    8
+                </td>
+                <td>
+                    <select name="grades1" id="g8_1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="g8_2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g8_3">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: white">
+                    PE
+                </td>
+                <td>
+                    <select name="grades1" id="pe_g1">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades2" id="pe_g2">
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">-</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="grades3" id="g8_3">
+                      <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="button" class="btn btn-primary btn-lg" style="align-self: center" onclick="add_grades()">Calculate GPA</button>
+        </div>
+        <br>
+        <div class="alert alert-success" id="GPA" style="text-align: center">
+            <b>
+                Your GPA
+            </b>
+        </div>
+        <div class="alert alert-primary" role="alert" style="text-align: center">
+            <div id="Achievement">
+                <h3>
+                    What did you achieve?
+                </h3>
+            </div>
+        </div>
+        <br>
+        <h2 style="text-align: center; color: yellow"><b>How Is It Calculated?</b></h2>
+        <p style="text-align: center" id="ave_calc"> Principals List = 6.6; Distinction: 6.4; Commendation for Effort and Achievement: 6.2;
+            Example Calculation for PL with 8 subjects --> (4 * 7 + 6 * 3 + 5 + 2(5*7 + 6*3) / (8*3) = 6.54
+        </p>
+    </div>
+
+    <!--getwaves.io is very useful-->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#000b76" fill-opacity="1" d="M0,320L60,314.7C120,309,240,299,360,250.7C480,203,600,117,720,117.3C840,117,960,203,1080,208C1200,213,1320,139,1380,101.3L1440,64L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+</body>
+</html>
