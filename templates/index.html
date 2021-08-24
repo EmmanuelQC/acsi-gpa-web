@@ -181,6 +181,8 @@
             console.log("Number of all grades(with PE): " + sub_grades+2);
 
             //Includes PE
+            let pe_SA = document.querySelector("#pe_g1").value;
+            let pe_AL = document.querySelector("#pe_g2").value;
             //Does not include -
             if (pe_AL == 0 || pe_SA == 0) {
                 console.log("*Your PE grades are not counted since you have put at least one as 0")
