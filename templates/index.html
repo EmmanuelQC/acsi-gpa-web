@@ -181,11 +181,16 @@
             console.log("Number of all grades(with PE): " + sub_grades+2);
 
             //Includes PE
-            let pe_SA = document.querySelector("#pe_g1").value;
-            let pe_AL = document.querySelector("#pe_g2").value;
-            total_grades += parseFloat(pe_SA) + parseFloat(pe_AL);
+            //Does not include -
+            if (pe_AL == 0 || pe_SA == 0) {
+                console.log("*Your PE grades are not counted since you have put at least one as 0")
+            }
+            else {
+                total_grades += parseFloat(pe_SA) + parseFloat(pe_AL);
+                sub_grades += 2; // plus PE's (only two grades for the subject)
+            }
             console.log("All grades Added: " + total_grades);
-            average(total_grades, sub_grades + 2); //total number of grade plus PE's (only two grades for the subject)
+            average(total_grades, sub_grades); //total number of grades
         }
 
         function tipsDisplay() {
@@ -216,16 +221,16 @@
             if (average_grades > p_list) {
                 a_text.innerHTML = "Amazing! You achieved Principles list!";
             }
-            else if (average_grades < p_list && average_grades > d_list) {
+            else if (average_grades <= p_list && average_grades >= d_list) {
                 a_text.innerHTML = "Great Job! You achieved Distinction!";
             }
-            else if (average_grades < d_list && average_grades > cD_list) {
+            else if (average_grades <= d_list && average_grades >= cD_list) {
                 a_text.innerHTML = "Cool! You achieved Commendation for effort and achievment!";
             }
-            else if (average_grades < cD_list && average_grades > 6.22) {
+            else if (average_grades <= cD_list && average_grades >= 6.22) {
                 a_text.innerHTML = "Cool! You achieved Commendation for effort!";
             }
-            else if (average_grades < 4 && average_grades > 1) {
+            else if (average_grades <= 4 && average_grades >= 1) {
                 a_text.innerHTML = "You're likely on monitering. But try a little harder next time! Persevere, do your work and always ask questions! You can do it!";
             }
             else if (average_grades === 0) {
