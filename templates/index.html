@@ -220,16 +220,16 @@
         function check(average_grades) {
             let a_text = document.querySelector("#Achievement");
 
-            if (average_grades > p_list) {
+            if (average_grades >= p_list) {
                 a_text.innerHTML = "Amazing! You achieved Principles list!";
             }
-            else if (average_grades <= p_list && average_grades >= d_list) {
+            else if (average_grades < p_list && average_grades >= d_list) {
                 a_text.innerHTML = "Great Job! You achieved Distinction!";
             }
-            else if (average_grades <= d_list && average_grades >= cD_list) {
+            else if (average_grades < d_list && average_grades >= cD_list) {
                 a_text.innerHTML = "Cool! You achieved Commendation for effort and achievment!";
             }
-            else if (average_grades <= cD_list && average_grades >= 6.22) {
+            else if (average_grades < cD_list && average_grades >= 6.22) {
                 a_text.innerHTML = "Cool! You achieved Commendation for effort!";
             }
             else if (average_grades <= 4 && average_grades >= 1) {
