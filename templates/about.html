@@ -9,7 +9,82 @@
 
     <title>GPA Calculator</title>
 </head>
-<body style="background-color: black; color: white;">
+    
+<style>
+    a
+    {
+        text-decoration: none;
+    }
+    .container
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    .btn
+    {
+        width: 100px;
+        height: 100px;
+        background-color: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 2em;
+        margin-right: 1em;
+        cursor: pointer;
+        transition: all 0.3s;
+        border-radius: 10px;
+    }
+    i.fa
+    {
+        font-size: 44px;
+    }
+    #fb
+    {
+        color: #006fff;
+        text-shadow: 0 0 30px #006fff;
+    }
+    #ig
+    {
+        color: #ff5f40;
+        text-shadow: 0 0 30px #ff5f40;
+    }
+    #tw
+    {
+        color: #00acff;
+        text-shadow: 0 0 30px #00acff;
+    }
+    .btn.fb-btn
+    {
+        box-shadow: 0 20px 20px -17px rgba(0,111,255,0.53);
+    }
+    .btn.fb-btn:hover
+    {
+        transform: scale(1.2);
+        box-shadow: 0 30px 45px -15px rgba(0,111,255,0.65);
+    }
+    .btn.ig-btn
+    {
+        box-shadow: 0 20px 20px -17px rgba(255,16,39,0.5);
+    }
+    .btn.ig-btn:hover
+    {
+        transform: scale(1.2);
+        box-shadow: 0 30px 45px -15px rgba(255,16,39,0.57);
+    }
+    .btn.tw-btn
+    {
+        box-shadow: 0 20px 20px -17px rgba(0,255,255,0.53);
+    }
+    .btn.tw-btn:hover
+    {
+        transform: scale(1.2);
+        box-shadow: 0 30px 45px -15px rgba(0,111,255,0.6);
+    }
+</style>
+    
+<body style="background-color: #121212; color: white;">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 200"><path fill="#0099ff" fill-opacity="1" d="M0,32L60,37.3C120,43,240,53,360,85.3C480,117,600,171,720,165.3C840,160,960,96,1080,90.7C1200,85,1320,139,1380,165.3L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
     <div class="container-sm">
         <h1 style="color: dodgerblue; padding: 7px; text-align: left">
@@ -27,7 +102,7 @@
 
         <br>
         
-        <!--img src="acsi-gpa-web/assets/Grade Criteria.png"!-->
+        <img src="acsi-gpa-web/assets/Grade Criteria.png" width="500" height="600">
 
         <div align="center">
             <div class="spinner-grow text-primary" role="status">
@@ -41,6 +116,23 @@
             </div>
         </div>
         <br>
+        <div class="container">
+            <a href="https://www.instagram.com/emmanuelqcarter/">
+                <div class="btn fb-btn">
+                    <i class="fa fa-instagram" aria-hidden="true" id="fb"></i>
+                </div>
+            </a>
+            <a href="hhttps://www.linkedin.com/in/emmanuel-carter-70b913183/">
+                <div class="btn ig-btn">
+                    <i class="fa-brands fa-linkedin-in" aria-hidden="true" id="ig"></i>
+                </div>
+            </a>
+            <a href="http://www.emmanuelqcarter.com/">
+                <div class="btn tw-btn">
+                    <i class="fa-solid fa-browser" aria-hidden="true" id="tw"></i>
+                </div>
+            </a>
+        </div>
         <div align="center">
             <a href="https://www.instagram.com/emmanuelqcarter/" class="btn btn-primary" role="button" data-bs-toggle="button">Instagram</a>
             <a href="http://www.emmanuelqcarter.com/" class="btn btn-primary" role="button" data-bs-toggle="button">Personal Website</a>
