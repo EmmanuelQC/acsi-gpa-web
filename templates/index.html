@@ -50,6 +50,8 @@
             d_list = (3 * 7 + (total_s-3-2) * 6 + 5*2 + (4*7 + (total_s-4)*6) * 2) / total_s_g;
             cD_list = (2 * 7 + (total_s-2) * 5 + (3*7 + (total_s-3)*5) * 2) / total_s_g;
             
+            console.log("principle's list: " + p_list.toString());
+            
             /*
             //Changing of text to calculated GPA limits
             var text = document.getElementById("criteria")
@@ -696,12 +698,14 @@
         <div align="center">
             <h3 style="color: dodgerblue"><u>Criteria Average</u></h3>
             <div id="criteria">
-                <h5>Principles List: </h5>
-                <b>GPA of 6.60 or higher (two decimal points)</b>
-                <h5>Distinction: </h5>
-                <b>GPA of 6.40 - 6.59 (two decimal points)</b>
-                <h5>Effort and Achievement: </h5>
-                <b>GPA of 6.20 - 6.39 (two decimal points)</b>
+                <h5>Principles List (two decimal points): </h5>
+                <strong>6.60 or higher</strong>
+                <br>
+                <h5>Distinction (two decimal points): </h5>
+                <strong>6.40 - 6.59</strong>
+                <br>
+                <h5>Effort and Achievement (two decimal points): </h5>
+                <strong>6.20 - 6.39 </strong>
             </div>
         </div>
         <script>
